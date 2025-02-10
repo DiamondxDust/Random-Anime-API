@@ -1,0 +1,68 @@
+<%- include("partials/header.ejs") %>
+    <% if (!locals.currentUser){ %>
+      <a href="/login">Login</a> <a href="/signup">Sign Up</a>
+    <% } else { %>
+      <h3 style="text-align: center;">Welcome, <%= currentUser.email %>!</h3>
+    <% } %>
+    <% if (locals.currentUser){ %>
+      <a href="/viewlist">View List!</a> <a href="/logout">Log Out</a>
+    <% } %>
+
+    <!-- Genre, number of episodes, nsfw, age rating, start date, status -->
+    <form class="tab-view" action="/" id="form" class="form" method="POST">
+        <select name="genre" class="form-select" required>
+          <option value="" data-display="Select">Genre</option>
+          <% genres.forEach((genre) => { %>
+            <option value=<%= genre.slug %>><%= genre.title %></option>
+          <% }) %>
+        </select>
+        <select name="ageRating" class="form-select">
+            <option value="">Age Rating</option>
+            <option value="G">G</option>
+            <option value="PG">PG</option>
+            <option value="R">R</option>
+            <option value="R18">R18</option>
+        </select>
+        <select name="status" class="form-select">
+            <option value="">Status</option>
+            <option value="current">Current</option>
+            <option value="finished">Finished</option>
+            <option value="tba">TBA</option>
+            <option value="unreleased">Unreleased</option>
+            <option value="upcoming">Upcoming</option>
+        </select>
+        <button type="submit" class="form-submit">Search</button>
+      </form>
+        <% if (locals.data){ %>
+          <% locals.data.forEach((item) => { %>
+            <div class="movie_card" id="<%= item.id %>">
+                    <div class="info_section">
+                    <div class="movie_header">
+                        <h2><%= item.attributes.titles.en || item.attributes.titles.en_jp || item.attributes.titles.en_us || item.attributes.titles.ja_jp %></h2>
+                        <h4><%= item.attributes.startDate %></h4>
+                        <h4><%= item.attributes.status %></h4>
+                        <% if (locals.currentUser) { %>
+                          <form action="/addanime" method="POST">
+                            <button type="submit" name="addanime" value=<%-JSON.stringify(item.links.self)%> id="tab">Add Anime</button>
+                          </form>
+                          <% } %>
+                        <p class="text">
+                        <%= item.attributes.synopsis %>
+                        </p>
+                    </div>
+                    </div>
+                    
+                    <div class="blur_back" style="background: url('<%= item.attributes.posterImage.original %>'); background-size: cover;"></div>   
+                </div>
+              <% }) %>
+
+        <% } else if (locals.error) { %>
+          <h2 style="text-align: center;">
+            <%= error %>
+          </h2>
+          <% } else { %>
+          <h2 style="text-align: center;">
+            Hiya
+          </h2>
+        <% } %>
+<%- include("partials/footer.ejs") %>
