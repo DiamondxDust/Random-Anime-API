@@ -1,0 +1,21 @@
+<%- include("partials/header.ejs") %>
+    <h1>Sign Up Here!</h1>
+    <% if (locals.error){ %>
+        <h3 style="color:red"><%= error %></h3>
+    <% } %>
+    <form action="/signup" method="POST">
+        <input type="text" name="username" placeholder="Email" required>
+        <br>
+        <br>
+        <input type="password" name="password" minlength="6" placeholder="Password" required>
+        <br>
+        <br>
+        <input type="password" name="password2" placeholder="Confim Password" required>
+        <br>
+        <br>
+        <input style="margin-bottom:10px;" type="submit" value="Sign Up">
+    </form>
+    <a href="/">Home</a>
+
+
+<%- include("partials/footer.ejs") %>

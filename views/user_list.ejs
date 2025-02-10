@@ -1,0 +1,38 @@
+<%- include("partials/header.ejs") %>
+
+    <h2 style="text-align: center;">Viewing <%= user.email %>'s List!</h2>
+    <a href="/">Home</a> <a href="/viewlist">View All</a>
+    <% if (!locals.genres) { %>
+      <h3 style="color:red">Nothing here...yet!</h3>
+    <% } else { %>
+    <form class="tab-view" action="/viewlist/filter" id="form" class="form" method="POST">
+        <select name="genre" class="form-select" required>
+          <option value="" data-display="Select">Genre</option>
+          <% genres.forEach((genre) => { %>
+            <option value=<%= genre %>><%= genre %></option>
+          <% }) %>
+        </select>
+        <button type="submit" class="form-submit">Filter</button>
+    </form>
+      <% locals.list.forEach((item) => { %>
+        <div class="movie_card" id="<%= item.apiId %>">
+                <div class="info_section">
+                <div class="movie_header">
+                    <h2><%= item.title %></h2>
+                    <h4><%= item.startdate.toLocaleDateString() %></h4>
+                    <h4><%= item.status %></h4>
+                    <h4><%= item.genres %></h4>
+                    <form action="/removeanime" method="POST">
+                        <button type="submit" name="removeanime" value=<%= item.id%> id="tab">Remove from List</button>
+                      </form>
+                    <p class="text">
+                    <%= item.synopsis %>
+                    </p>
+                </div>
+                </div>
+                <div class="blur_back" style="background: url('<%= item.imageurl %>'); background-size: cover;"></div>
+            </div>
+      <% }) %>
+    <% } %>
+
+<%- include("partials/footer.ejs") %>

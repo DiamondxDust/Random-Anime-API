@@ -1,0 +1,16 @@
+<%- include("partials/header.ejs") %>
+    <h1 style="text-align: center;">Log In!</h1>
+    <img class="login-img" src="images/login_page.jpg">
+    <% if (locals.error){ %>
+        <h3 style="color:red"><%= error %></h3>
+    <% } %>
+    <form action="/login" method="POST">
+        <input type="text" name="username" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <br>
+        <br>
+        <input style="margin-bottom:10px;" type="submit" value="login">
+    </form>
+    <a href="/">Home</a>
+
+<%- include("partials/footer.ejs") %>
