@@ -43,9 +43,10 @@ const db = new pg.Client({
     database: process.env.PG_DATABASE,
     password: process.env.PG_PASSWORD,
     port: process.env.PG_PORT,
-  });
+});
 
-  db.connect();
+
+db.connect();
 
 //Need to initialize the array that stores the random retrieved three anime here for use in the addanime post route.
 // Array is emptied each time the /search post route is called.
