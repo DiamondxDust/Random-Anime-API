@@ -1,4 +1,4 @@
-//Used to import genre list into local database from API
+//Used to import genre list into local database from Kitsu API
 import axios from "axios";
 import * as fs from "fs";
 

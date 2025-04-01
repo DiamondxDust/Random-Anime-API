@@ -1,6 +1,3 @@
-//Need to look at behavior of remove button from user list
-//Need to edit CSS to center everything, flexbox?
-
 import express from "express";
 import axios from "axios";
 import bodyParser from "body-parser";
@@ -225,7 +222,6 @@ app.post("/addanime", async (req, res) => {
     const genreList = await af.getGenres();
     const animeURL = req.body.addanime;
     const response = await axios.get(animeURL);
-    //const response = await axios.get("https://kitsu.io/api/edge/anime/14275")
     const data = response.data.data.attributes;
     const genreLink = response.data.data.relationships.genres.links.related;
     let genreArr = [];
@@ -238,15 +234,6 @@ app.post("/addanime", async (req, res) => {
     const imageURL = data.posterImage.original;
 
     let title = data.titles.en || data.titles.en_jp || data.titles.en_us || data.titles.ja_jp;
-    // if (data.titles.en){
-    //     title = data.titles.en;
-    // } else if (data.titles.en_jp){
-    //     title = data.titles.en_jp;
-    // } else if (data.titles.en_us){
-    //     title = data.titles.en_us;
-    // } else {
-    //     title = data.titles.ja_jp;
-    // };
 
     genreData.forEach((e) => {
         genreArr.push(e.attributes.name);
